@@ -46,3 +46,6 @@ build/
 
 # IntelliJ IDEA project files
 /.idea/
+
+# Ignore Maven Wrapper folder
+.mvn/wrapper/
