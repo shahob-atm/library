@@ -37,6 +37,12 @@ build/
 ### Mac OS ###
 .DS_Store
 
-.idea/
+# Java build output directories
+/out/
+/target/
 
-.idea
+# Maven build directory
+/mvn/
+
+# IntelliJ IDEA project files
+/.idea/
