@@ -39,7 +39,7 @@
                     <td>
                         <% if (session.getAttribute("id") != null && session.getAttribute("role").equals(AuthUser.Role.ADMIN)) {%>
                         <a href="/admin/book/delete?bookId=${book.getId()}" class="btn btn-danger">🗑️ Delete</a>
-                        <a href="/admin/book/update" class="btn btn-primary mx-2">✏️ Edit</a>
+                        <a href="/admin/book/update?bookId=${book.getId()}" class="btn btn-primary mx-2">✏️ Edit</a>
                         <% } %>
                     </td>
                 </tr>

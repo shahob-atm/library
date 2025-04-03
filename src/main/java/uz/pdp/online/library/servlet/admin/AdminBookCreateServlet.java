@@ -4,12 +4,10 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
 import uz.pdp.online.library.dao.BookDAO;
 import uz.pdp.online.library.dao.UploadDAO;
+import uz.pdp.online.library.entity.AuthUser;
 import uz.pdp.online.library.entity.Book;
 import uz.pdp.online.library.entity.Upload;
 import uz.pdp.online.library.util.StringUtils;
@@ -19,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.UUID;
 
 @WebServlet(name = "AdminBookCreateServlet", value = "/admin/book/create")
@@ -30,6 +29,15 @@ public class AdminBookCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Object id = session.getAttribute("id");
+        Object role = session.getAttribute("role");
+
+        if (Objects.isNull(id) || Objects.equals(AuthUser.Role.USER, role)) {
+            response.sendRedirect("/book/list");
+            return;
+        }
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/admin/create_book.jsp");
         dispatcher.forward(request, response);
     }

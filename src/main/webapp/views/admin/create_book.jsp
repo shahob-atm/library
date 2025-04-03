@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Home Page</title>
+    <title>Create-Book</title>
     <jsp:include page="/fragment/css.jsp"/>
 </head>
 <body>

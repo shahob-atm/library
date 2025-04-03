@@ -1,6 +1,8 @@
 package uz.pdp.online.library.service;
 
 import lombok.NonNull;
+import uz.pdp.online.library.dao.AuthUserDAO;
+import uz.pdp.online.library.entity.AuthUser;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -11,6 +13,9 @@ import java.util.Properties;
 
 public class MailtrapService {
     private static MailtrapService mailtrapService;
+    private static final AuthUserDAO authUserDAO = new AuthUserDAO();
+    private static final String username = "shahobiddinatamurodov@gmail.com";  // Gmail manzilingiz
+    private static final String password = "tkci podc qimn xtfz"; // Gmail App Password
 
     public static MailtrapService getMailtrapService() {
         if (mailtrapService == null) {
@@ -19,16 +24,16 @@ public class MailtrapService {
         return mailtrapService;
     }
 
-    private static final String username = "shahobiddinatamurodov@gmail.com";  // Gmail manzilingiz
-    private static final String password = "tkci podc qimn xtfz"; // Gmail App Password
-
     public static void sendActivationEmail(@NonNull String userID) {
+        AuthUser authUser = authUserDAO.findById(userID);
+
         try {
             var properties = getProperties();
-            var session = getSession(properties, username, password);
+            var session = getSession(properties);
             var message = new MimeMessage(session);
+
             message.setFrom(new InternetAddress(username));
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress("soungoku58@gmail.com"));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(authUser.getEmail()));
             message.setSubject("Account Activation");
 
             var multipart = new MimeMultipart();
@@ -66,7 +71,6 @@ public class MailtrapService {
             System.out.println("Activation email sent successfully!");
         } catch (Exception e) {
             e.printStackTrace();
-            // Log error and send proper response (in production use proper logging)
         }
     }
 
@@ -79,7 +83,7 @@ public class MailtrapService {
         return properties;
     }
 
-    private static Session getSession(Properties properties, String username, String password) {
+    private static Session getSession(Properties properties) {
         return Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {

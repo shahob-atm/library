@@ -18,7 +18,7 @@ public class AuthUserOTP extends Auditable {
     @Column(nullable = false, updatable = false)
     private String userID;
 
-    @Column(columnDefinition = "timestamp default now() + interval '5 minute'", nullable = false, updatable = false)
+    @Column(columnDefinition = "timestamp default now() + interval '5 minute'", nullable = false)
     private LocalDateTime validTill;
 
     private boolean deleted;
