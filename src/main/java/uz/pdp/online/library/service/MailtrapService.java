@@ -14,8 +14,8 @@ import java.util.Properties;
 public class MailtrapService {
     private static MailtrapService mailtrapService;
     private static final AuthUserDAO authUserDAO = new AuthUserDAO();
-    private static final String username = "shahobiddinatamurodov@gmail.com";  // Gmail manzilingiz
-    private static final String password = "tkci podc qimn xtfz"; // Gmail App Password
+    private static final String username = "you_email";  // Gmail manzilingiz
+    private static final String password = "password"; // Gmail App Password
 
     public static MailtrapService getMailtrapService() {
         if (mailtrapService == null) {
